@@ -25,7 +25,15 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install jupytext
+        
     # It is not necessary to specify $GITHUB_WORKSPACE since it is the current folder
     - name: Convert notebook to py script
       run: |
-        jupytext --to py decision-tree-classifier-tutorial.ipynb -o $GITHUB_WORKSPACE/python/decision-tree-classifier-tutorial.py 
+        jupytext --to py decision-tree-classifier-tutorial.ipynb -o $GITHUB_WORKSPACE/python/decision-tree-classifier.py 
+
+    - name: Commit new py executable
+      run:  |
+        git add . $GITHUB_WORKSPACE/python/decision-tree-classifier.py
+        git commit -m "Update executable"
+        git fetch origin main
+        git push origin HEAD:main
