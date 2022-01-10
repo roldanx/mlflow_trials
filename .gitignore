@@ -1,4 +1,4 @@
-./.ipynb_checkpoints/
-./mlruns/
-./python/mlruns/
-./car_evolution.csv
+.ipynb_checkpoints/
+mlruns/
+python/mlruns/
+car_evolution.csv
