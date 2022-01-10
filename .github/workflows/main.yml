@@ -33,8 +33,9 @@ jobs:
 
     - name: Commit new py executable
       run:  |
-        git remote set-url origin ${{ secrets.ssh }}
-        git add . $GITHUB_WORKSPACE/python/decision-tree-classifier.py
+        git config --global user.name 'roldanx'
+        git config --global user.email 'roldanx@github.com'
+        git add $GITHUB_WORKSPACE/python/decision-tree-classifier.py
         git commit -m "Update executable"
         git fetch origin main
         git push origin HEAD:main
