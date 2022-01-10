@@ -26,19 +26,22 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install jupytext
+        pip install jupytext pipreqs
         
     # It is not necessary to specify $GITHUB_WORKSPACE since it is the current folder
     - name: Convert notebook to py script
       run: |
         jupytext --to py decision-tree-classifier.ipynb -o $GITHUB_WORKSPACE/python/decision-tree-classifier.py 
 
+    - name: Generate requirements.txt 
+      run: pipreqs --force python/ 
+
     # WARNING: It will fail if no change to decision-tree-classifier.ipynb has been performed
     - name: Commit new py executable
       run:  |
         git config --global user.name 'roldanx'
         git config --global user.email 'roldanx@github.com'
-        git add $GITHUB_WORKSPACE/python/decision-tree-classifier.py
-        git commit -m "Update executable"
+        git add $GITHUB_WORKSPACE/python/decision-tree-classifier.py $GITHUB_WORKSPACE/python/requirements.txt
+        git commit -m "Update executable and generate requirements"
         git fetch origin main
         git push origin HEAD:main
