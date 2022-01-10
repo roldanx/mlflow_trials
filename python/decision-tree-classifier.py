@@ -21,11 +21,9 @@
 
 # +
 import category_encoders as ce
-import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import matplotlib.pyplot as plt # data visualization
 import mlflow
-import seaborn as sns # statistical data visualization
 import warnings
 
 from sklearn import tree
