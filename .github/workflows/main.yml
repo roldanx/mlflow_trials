@@ -17,13 +17,15 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      # Install jupytext
-      - name: Install jupytext
-        run: pip install jupytext
-
-      # Convert notebook to py script
-      - name: Convert notebook to py script
-        run: jupytext --to py decision-tree-classifier-tutorial.ipynb
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install jupytext
+    # It is not necessary to specify $GITHUB_WORKSPACE since it is the current folder
+    - name: Convert notebook to py script
+      run: |
+        jupytext --to py decision-tree-classifier-tutorial.ipynb -o $GITHUB_WORKSPACE/python/decision-tree-classifier-tutorial.py 
