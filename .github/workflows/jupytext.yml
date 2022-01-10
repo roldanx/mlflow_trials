@@ -4,12 +4,11 @@ name: Jupytext
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+  # Triggers the workflow on push only for ipynb modifications
   push:
     branches: [ main ]
     paths:
       - '**.ipynb'
-
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -34,6 +33,7 @@ jobs:
       run: |
         jupytext --to py decision-tree-classifier.ipynb -o $GITHUB_WORKSPACE/python/decision-tree-classifier.py 
 
+    # WARNING: It will fail if no change to decision-tree-classifier.ipynb has been performed
     - name: Commit new py executable
       run:  |
         git config --global user.name 'roldanx'
