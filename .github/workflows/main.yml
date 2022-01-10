@@ -33,6 +33,7 @@ jobs:
 
     - name: Commit new py executable
       run:  |
+        git remote set-url origin ${{ secrets.ssh }}
         git add . $GITHUB_WORKSPACE/python/decision-tree-classifier.py
         git commit -m "Update executable"
         git fetch origin main
