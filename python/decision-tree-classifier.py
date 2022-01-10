@@ -13,7 +13,7 @@
 #     name: python3
 # ---
 
-# # Decision tree classifier --> Car safety
+# # Decision tree classifier: Car safety
 
 # Code and data taken from: https://www.kaggle.com/prashant111/decision-tree-classifier-tutorial
 
