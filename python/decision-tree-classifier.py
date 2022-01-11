@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.5
+#       jupytext_version: 1.13.6
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -22,7 +22,7 @@
 # +
 import category_encoders as ce
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
-#import matplotlib.pyplot as plt # data visualization
+import matplotlib.pyplot as plt # data visualization
 import mlflow
 import warnings
 
@@ -145,10 +145,8 @@ print('Training-set accuracy score: {0:0.4f}'. format(acc))
 
 # ### Visualize decision-trees
 
-# +
-#plt.figure(figsize=(12,8))
-#tree.plot_tree(clf_gini.fit(X_train, y_train))
-# -
+plt.figure(figsize=(12,8))
+tree.plot_tree(clf_gini.fit(X_train, y_train))
 
 # ## Decision Tree Classifier with criterion entropy
 
@@ -162,9 +160,8 @@ print('Model accuracy score with criterion entropy: {0:0.4f}'. format(accuracy_s
 # We can see that the training-set score and test-set score is same as above. The training-set accuracy score is 0.7865 while the test-set accuracy to be 0.8021. These two values are quite comparable. So, there is no sign of overfitting. 
 #
 
-# +
-#plt.figure(figsize=(12,8))
-#tree.plot_tree(clf_en.fit(X_train, y_train))
+plt.figure(figsize=(12,8))
+tree.plot_tree(clf_en.fit(X_train, y_train))
 
 # + [markdown] tags=[]
 # ## Confusion matrix
