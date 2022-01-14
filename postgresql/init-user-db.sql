@@ -1,0 +1,1 @@
+GRANT ALL PRIVILEGES ON DATABASE mlflow_db TO mlflow;
