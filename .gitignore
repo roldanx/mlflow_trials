@@ -1,4 +1,5 @@
 .ipynb_checkpoints/
 mlruns/
 python/mlruns/
+python/postgre_mlruns/
 car_evolution.csv
