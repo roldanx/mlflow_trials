@@ -24,6 +24,7 @@ import category_encoders as ce
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import matplotlib.pyplot as plt # data visualization
 import mlflow
+import os
 import warnings
 
 from sklearn import tree
@@ -93,21 +94,25 @@ X_test.head()
 
 # ## Decision Tree Classifier with criterion gini index
 
-# +
-# train and register the classifier
+# create classifier
 md = 3
 clf_gini = DecisionTreeClassifier(criterion='gini', max_depth = md, random_state=0)
 
-with mlflow.start_run():
-    clf_gini.fit(X_train, y_train)
-    y_pred_gini = clf_gini.predict(X_test)
-    acc = accuracy_score(y_test, y_pred_gini)
-
-    mlflow.log_param("max_depth", md)
-    mlflow.log_metric("accuracy", acc)
-    mlflow.sklearn.log_model(clf_gini, "model")
+# train classifier and predict results
+clf_gini.fit(X_train, y_train)
+y_pred_gini = clf_gini.predict(X_test)
+acc = accuracy_score(y_test, y_pred_gini)
 
 # + tags=[]
+# decision-tree visualization
+plt.figure(figsize=(12,8))
+tree.plot_tree(clf_gini.fit(X_train, y_train))
+plt.savefig("tree.jpg")
+# -
+
+# ## MLFlow code
+
+# + jupyter={"source_hidden": true} tags=[]
 ## MLFlow snippet
 #import mlflow
 #from urllib.parse import urlparse
@@ -134,6 +139,25 @@ with mlflow.start_run():
 #
 #y_pred_gini = clf_gini.predict(X_test)
 #print('Model accuracy score with criterion gini index: {0:0.4f}'. format(accuracy_score(y_test, y_pred_gini)))
+
+# + jupyter={"source_hidden": true} tags=[]
+## MLFlow snippet
+## locally log the classifier
+#with mlflow.start_run():
+#    mlflow.log_param("max_depth", md)
+#    mlflow.log_metric("accuracy", acc)
+#    mlflow.sklearn.log_model(clf_gini, "model")
+
+# +
+# register the classifier
+os.environ['MLFLOW_TRACKING_URI'] = 'http://localhost:8000/'
+mlflow.set_experiment('TreeClassifier')
+
+with mlflow.start_run(run_name='blade_runner'):
+    mlflow.log_param("max_depth", md)
+    mlflow.log_metric("accuracy", acc)
+    mlflow.sklearn.log_model(sk_model=clf_gini, artifact_path='', registered_model_name='tree_model')
+    mlflow.log_artifact("tree.jpg", artifact_path='plots')
 # -
 
 # compare accuracy vs. training prediction
@@ -142,11 +166,6 @@ y_pred_train_gini = clf_gini.predict(X_train)
 print('Training-set accuracy score: {0:0.4f}'. format(acc))
 
 # Here, the training-set accuracy score is 0.7865 while the test-set accuracy to be 0.8021. These two values are quite comparable. So, there is no sign of overfitting. 
-
-# ### Visualize decision-trees
-
-plt.figure(figsize=(12,8))
-tree.plot_tree(clf_gini.fit(X_train, y_train))
 
 # ## Decision Tree Classifier with criterion entropy
 
