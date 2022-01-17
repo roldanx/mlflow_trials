@@ -38,8 +38,10 @@ jobs:
     - name: Generate requirements.txt 
       run: pipreqs --force python/ 
 
-    # WARNING: It will fail if no change to decision-tree-classifier.ipynb has been performed
+    # WARNING: It will fail if no change to decision-tree-classifier.ipynb has been performed    
+    # git diff --exit-code $GITHUB_WORKSPACE/python/decision-tree-classifier.py
     - name: Commit new py executable
+      if: git diff --exit-code $GITHUB_WORKSPACE/python/decision-tree-classifier.py == 1
       run:  |
         git config --global user.name 'roldanx'
         git config --global user.email 'roldanx@github.com'
