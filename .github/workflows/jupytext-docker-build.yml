@@ -61,5 +61,6 @@ jobs:
         image: roldanx/tree-classifier-mlflow
         registry: docker.io
         dockerfile: python/Dockerfile
+        directory: python
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
