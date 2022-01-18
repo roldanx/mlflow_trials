@@ -51,13 +51,15 @@ jobs:
           echo "Changes to be commited in decision-tree-classifier.py"
         else
           echo "NO changes to be commited in decision-tree-classifier.py"
+          pwd
+          ls /home
         fi
 
     - name: Build and push Docker image
-      uses: mr-smithers-excellent/docker-build-push@v4
+      uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: roldanx/tree-classifier-mlflow
         registry: docker.io
-        dockerfile: $GITHUB_WORKSPACE/python/Dockerfile
+        dockerfile: python/Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
