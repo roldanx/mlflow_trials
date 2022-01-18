@@ -38,17 +38,20 @@ jobs:
     - name: Generate requirements.txt 
       run: pipreqs --force python/ 
 
-    # WARNING: It will fail if no change to decision-tree-classifier.ipynb has been performed    
-    # git diff --exit-code $GITHUB_WORKSPACE/python/decision-tree-classifier.py
-    - name: Commit new py executable
-      if: git diff --exit-code $GITHUB_WORKSPACE/python/decision-tree-classifier.py == 1
+    # WARNING: It will fail if decision-tree-classifier.ipynb is renamed without further changes 
+    - name: Commit new py executable if necessary
       run:  |
-        git config --global user.name 'roldanx'
-        git config --global user.email 'roldanx@github.com'
-        git add $GITHUB_WORKSPACE/python/decision-tree-classifier.py $GITHUB_WORKSPACE/python/requirements.txt
-        git commit -m "Update executable and generate requirements"
-        git fetch origin main
-        git push origin HEAD:main
+        if ! git diff --exit-code decision-tree-classifier.ipynb; then
+          git config --global user.name 'roldanx'
+          git config --global user.email 'roldanx@github.com'
+          git add $GITHUB_WORKSPACE/python/decision-tree-classifier.py $GITHUB_WORKSPACE/python/requirements.txt
+          git commit -m "Update executable and generate requirements"
+          git fetch origin main
+          git push origin HEAD:main
+          echo "Changes to be commited in decision-tree-classifier.py"
+        else
+          echo "NO changes to be commited in decision-tree-classifier.py"
+        fi
 
     - name: Build and push Docker image
       uses: mr-smithers-excellent/docker-build-push@v4
