@@ -55,7 +55,7 @@ jobs:
 
     - name: Build and push Docker image
       uses: mr-smithers-excellent/docker-build-push@v4
-      with: |
+      with:
         image: roldanx/tree-classifier-mlflow
         registry: docker.io
         dockerfile: $GITHUB_WORKSPACE/python/Dockerfile
