@@ -5,10 +5,13 @@ name: Jupytext and Docker build
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push only for ipynb modifications
-  push:
-    branches: [ main ]
+  pull_request:
+    types:
+      - opened
+    branches:
+      - main
     paths:
-      - 'decision-tree-classifier.ipynb'
+      - 'model-tree-classifier/decision-tree-classifier.ipynb'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -33,10 +36,10 @@ jobs:
     # It is not necessary to specify $GITHUB_WORKSPACE since it is the current folder
     - name: Convert notebook to py script
       run: |
-        jupytext --to py decision-tree-classifier.ipynb -o $GITHUB_WORKSPACE/python/decision-tree-classifier.py 
+        jupytext --to py $GITHUB_WORKSPACE/model-tree-classifier/decision-tree-classifier.ipynb -o $GITHUB_WORKSPACE/model-tree-classifier/decision-tree-classifier.py 
 
     - name: Generate requirements.txt 
-      run: pipreqs --force python/ 
+      run: pipreqs --force $GITHUB_WORKSPACE/model-tree-classifier/ 
 
     # WARNING: It will fail if decision-tree-classifier.ipynb is renamed without further changes 
     - name: Commit new py executable if necessary
@@ -44,7 +47,7 @@ jobs:
         if ! git diff --exit-code decision-tree-classifier.ipynb; then
           git config --global user.name 'roldanx'
           git config --global user.email 'roldanx@github.com'
-          git add $GITHUB_WORKSPACE/python/decision-tree-classifier.py $GITHUB_WORKSPACE/python/requirements.txt
+          git add $GITHUB_WORKSPACE/model-tree-classifier/decision-tree-classifier.py $GITHUB_WORKSPACE/model-tree-classifier/requirements.txt
           git commit -m "Update executable and generate requirements"
           git fetch origin main
           git push origin HEAD:main
@@ -55,13 +58,13 @@ jobs:
           ls /home
         fi
 
-    - name: Build and push Docker image
-      uses: mr-smithers-excellent/docker-build-push@v5
-      with:
-        registry: docker.io
-        image: roldanx/tree-classifier-mlflow
-        directory: python
-        dockerfile: python/Dockerfile
-        tags: latest
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        #    - name: Build and push Docker image
+        #      uses: mr-smithers-excellent/docker-build-push@v5
+        #      with:
+        #        registry: docker.io
+        #        image: roldanx/tree-classifier-mlflow
+        #        directory: python
+        #        dockerfile: python/Dockerfile
+        #        tags: latest
+        #        username: ${{ secrets.DOCKER_USERNAME }}
+        #        password: ${{ secrets.DOCKER_PASSWORD }}
