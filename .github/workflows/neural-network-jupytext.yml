@@ -44,7 +44,7 @@ jobs:
     # WARNING: It will fail if decision-tree-classifier.ipynb is renamed without further changes 
     - name: Commit new py executable if necessary
       run:  |
-        if ! git diff --exit-code neural-network.ipynb; then
+        if ! git diff --exit-code model-neural-network/neural-network.ipynb; then
           git config --global user.name 'roldanx'
           git config --global user.email 'roldanx@github.com'
           git add $GITHUB_WORKSPACE/model-neural-network/neural-network.py $GITHUB_WORKSPACE/model-neural-network/requirements.txt
