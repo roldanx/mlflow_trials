@@ -44,19 +44,20 @@ jobs:
     # WARNING: It will fail if decision-tree-classifier.ipynb is renamed without further changes 
     - name: Commit new py executable if necessary
       run:  |
-        if ! git diff --exit-code neural-network.ipynb; then
-          git config --global user.name 'roldanx'
-          git config --global user.email 'roldanx@github.com'
-          git add $GITHUB_WORKSPACE/model-neural-network/neural-network.py $GITHUB_WORKSPACE/model-neural-network/requirements.txt
-          git commit -m "Update executable and generate requirements"
-          git fetch origin main
-          git push origin HEAD:main
-          echo "Changes to be commited in neural-network.py"
-        else
-          echo "NO changes to be commited in neural-network.py"
-          pwd
-          ls /home
-        fi
+        git log
+#        if ! git diff --exit-code neural-network.ipynb; then
+#          git config --global user.name 'roldanx'
+#          git config --global user.email 'roldanx@github.com'
+#          git add $GITHUB_WORKSPACE/model-neural-network/neural-network.py $GITHUB_WORKSPACE/model-neural-network/requirements.txt
+#          git commit -m "Update executable and generate requirements"
+#          git fetch origin main
+#          git push origin HEAD:main
+#          echo "Changes to be commited in neural-network.py"
+#        else
+#          echo "NO changes to be commited in neural-network.py"
+#          pwd
+#          ls /home
+#        fi
 
         #    - name: Build and push Docker image
         #      uses: mr-smithers-excellent/docker-build-push@v5
