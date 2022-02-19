@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Jupytext and Docker build
+name: Neural network to binary
 
 # Controls when the workflow will run
 on:
@@ -27,7 +27,10 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout repo
       uses: actions/checkout@v2
-      
+
+    # Checks if notebook output has been cleaned
+    - uses: ResearchSoftwareActions/EnsureCleanNotebooksAction@1.1
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -41,7 +44,8 @@ jobs:
     - name: Generate requirements.txt 
       run: pipreqs --force $GITHUB_WORKSPACE/model-tree-classifier/ 
 
-    # WARNING: It will fail if decision-tree-classifier.ipynb is renamed without further changes 
+    # WARNING: It will probably fail if decision-tree-classifier.ipynb is renamed without further changes
+    # WARNING: At this time, .py and reqs are commited to Merge commit, but it can be commited to release/xxx branch
     - name: Commit new py executable if necessary
       run:  |
         if ! git diff --exit-code model-neural-network/neural-network.ipynb; then
