@@ -1,5 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
+# This is a basic workflow
 name: Neural network to binary
 
 # Controls when the workflow will run
@@ -37,7 +36,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install jupytext pipreqs
         
-    # It is not necessary to specify $GITHUB_WORKSPACE since it is the current folder
+    # It would not be necessary to specify $GITHUB_WORKSPACE since it is the current folder
     - name: Convert notebook to py script
       run: |
         jupytext --to py $GITHUB_WORKSPACE/model-neural-network/neural-network.ipynb -o $GITHUB_WORKSPACE/model-neural-network/neural-network.py
@@ -45,8 +44,9 @@ jobs:
     - name: Generate requirements.txt 
       run: pipreqs --force $GITHUB_WORKSPACE/model-tree-classifier/ 
 
-    # WARNING: It will probably fail if decision-tree-classifier.ipynb is renamed without further changes
-    # WARNING: At this time, .py and reqs are commited to Merge commit, but it can be commited to release/xxx branch
+    # WARNING: It will probably fail if neural-network.ipynb is renamed without further changes
+    # WARNING: At this time, .py and reqs are commited to Merge commit, but it can be modified under actions/checkout@v2
+    # so the commit goes to release/xxx branch
     - name: Commit new py executable if necessary
       run:  |
         if ! git diff --exit-code model-neural-network/neural-network.ipynb; then
@@ -62,14 +62,3 @@ jobs:
           pwd
           ls /home
         fi
-
-        #    - name: Build and push Docker image
-        #      uses: mr-smithers-excellent/docker-build-push@v5
-        #      with:
-        #        registry: docker.io
-        #        image: roldanx/tree-classifier-mlflow
-        #        directory: python
-        #        dockerfile: python/Dockerfile
-        #        tags: latest
-        #        username: ${{ secrets.DOCKER_USERNAME }}
-        #        password: ${{ secrets.DOCKER_PASSWORD }}
