@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'model-tree-classifier/neural-network.py'
+      - 'model-neural-network/neural-network.py'
   workflow_dispatch:
 
 jobs:
