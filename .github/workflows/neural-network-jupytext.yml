@@ -56,8 +56,8 @@ jobs:
         git config --global user.email 'roldanx@github.com'
         git add $GITHUB_WORKSPACE/model-neural-network/neural-network.py $GITHUB_WORKSPACE/model-neural-network/requirements.txt
         git commit -m "Update executable and generate requirements"
-        git fetch origin ${{ head_ref }}
-        git push origin ${{ head_ref }}
+        git fetch origin ${{ github.head_ref }}
+        git push origin ${{ github.head_ref }}
         # else
         #   echo "NO changes to be commited in neural-network.py"
         # fi
