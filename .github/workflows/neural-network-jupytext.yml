@@ -54,10 +54,9 @@ jobs:
         # if ! git diff --exit-code $GITHUB_WORKSPACE/model-neural-network/neural-network.py; then          
         git config --global user.name 'roldanx'
         git config --global user.email 'roldanx@github.com'
+        git fetch
         git checkout ${{ github.head_ref }}
         git add $GITHUB_WORKSPACE/model-neural-network/neural-network.py $GITHUB_WORKSPACE/model-neural-network/requirements.txt
-        git branch
-        git status
         git commit -m "Update executable and generate requirements"
         git fetch origin ${{ github.head_ref }}
         git push origin ${{ github.head_ref }}
