@@ -8,7 +8,8 @@ on:
     types:
       - opened
       - reopened
-      - synchronize
+        # We will comment 'syncronize' option, since we prefer to start GA manualy by creating/reopening PRs.
+        # - synchronize
     branches:
       - main
     paths:
@@ -50,16 +51,16 @@ jobs:
     # so the commit goes to release/xxx branch
     - name: Commit new py executable if necessary
       run:  |
-        if ! git diff --exit-code model-tree-classifier/decision-tree-classifier.py; then
-          git config --global user.name 'roldanx'
-          git config --global user.email 'roldanx@github.com'
-          git add $GITHUB_WORKSPACE/model-tree-classifier/decision-tree-classifier.py $GITHUB_WORKSPACE/model-tree-classifier/requirements.txt
-          git commit -m "Update executable and generate requirements"
-          git fetch origin main
-          git push origin HEAD:main
-          echo "Changes to be commited in decision-tree-classifier.py"
-        else
-          echo "NO changes to be commited in decision-tree-classifier.py"
-          pwd
-          ls /home
-        fi
+        # This "if" was set to launch the job manually from github and no changes were done to ipynb.
+        # if ! git diff --exit-code model-tree-classifier/decision-tree-classifier.py; then
+        git config --global user.name 'roldanx'
+        git config --global user.email 'roldanx@github.com'
+        git fetch
+        git checkout ${{ github.head_ref }}
+        git add $GITHUB_WORKSPACE/model-tree-classifier/decision-tree-classifier.py $GITHUB_WORKSPACE/model-tree-classifier/requirements.txt
+        git commit -m "Update executable and generate requirements"
+        git fetch origin ${{ github.head_ref }}
+        git push origin ${{ github.head_ref }}
+        # else
+        #   echo "NO changes to be commited in decision-tree-classifier.py"
+        # fi
