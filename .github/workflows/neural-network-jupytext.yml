@@ -59,8 +59,8 @@ jobs:
         git status
         git commit -m "Update executable and generate requirements"
         git status
-        git fetch origin ${{ github.head_ref }}
-        git push origin ${{ github.head_ref }}
+        git fetch
+        git push 
         # else
         #   echo "NO changes to be commited in neural-network.py"
         # fi
