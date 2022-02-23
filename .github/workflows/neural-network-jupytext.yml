@@ -58,9 +58,9 @@ jobs:
         git add $GITHUB_WORKSPACE/model-neural-network/neural-network.py $GITHUB_WORKSPACE/model-neural-network/requirements.txt
         git status
         git commit -m "Update executable and generate requirements"
-        git status origin ${{ github.ref_head }}
-        git fetch origin ${{ github.ref_head }}
-        git push origin ${{ github.ref_head }}
+        git status origin ${{ github.head_ref }}
+        git fetch origin ${{ github.head_ref }}
+        git push origin ${{ github.head_ref }}
         # else
         #   echo "NO changes to be commited in neural-network.py"
         # fi
