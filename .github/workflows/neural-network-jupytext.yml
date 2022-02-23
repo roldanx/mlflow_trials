@@ -52,6 +52,9 @@ jobs:
       run:  |
         # This "if" was set to launch the job manually and no changes were done to ipynb.
         # if ! git diff --exit-code $GITHUB_WORKSPACE/model-neural-network/neural-network.py; then          
+        echo "Pull request's base branch is: ${BASE_BRANCH}"
+        echo ${{ github.event.pull_request.title }}
+
         git config --global user.name 'roldanx'
         git config --global user.email 'roldanx@github.com'
         git add $GITHUB_WORKSPACE/model-neural-network/neural-network.py $GITHUB_WORKSPACE/model-neural-network/requirements.txt
