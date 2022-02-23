@@ -43,7 +43,7 @@ jobs:
         jupytext --to py $GITHUB_WORKSPACE/model-neural-network/neural-network.ipynb -o $GITHUB_WORKSPACE/model-neural-network/neural-network.py
 
     - name: Generate requirements.txt 
-      run: pipreqs --force $GITHUB_WORKSPACE/model-tree-classifier/ 
+      run: pipreqs --force $GITHUB_WORKSPACE/model-neural-network/ 
 
     # WARNING: It will probably fail if neural-network.ipynb is renamed without further changes
     # WARNING: At this time, .py and reqs are commited to Merge commit, but it can be modified under actions/checkout@v2
