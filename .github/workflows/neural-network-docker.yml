@@ -1,4 +1,4 @@
-name: Decision tree Docker build 
+name: Neural network Docker build 
 on:
   pull_request:
     types:
