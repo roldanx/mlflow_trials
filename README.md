@@ -13,7 +13,7 @@ $ mlflow server --backend-store-uri postgresql://mlflow:mlflow@localhost/mlflow_
 ```
 Train model:
 ```
-$ docker run --name tree-classifier-mlflow --network host roldanx/tree-classifier-mlflow
+$ docker run --name <PROJECT> --network host roldanx/<PROJECT>
 ```
 Check logged tree classifier model (from `browser`):
 
@@ -26,7 +26,7 @@ http://localhost:8000
 Manual docker build (from `mlflow_trials` folder):
 ```
 $ docker build --tag postgresql-mlflow postgresql
-$ docker build --tag tree-classifier-mlflow python
+$ docker build --tag <PROJECT> model-<PROJECT>
 ```
 Enter the database:
 ```
