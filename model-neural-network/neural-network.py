@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.5
+#       jupytext_version: 1.13.7
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -15,15 +14,17 @@
 
 # # Titanic survival classification problem
 # - Download titanic dataset.
-# - Train a 2-layer NN with 5 neurons per layer (input/output apart) for 20 epochs and 64 batch size.
+# - Train a 2-layer NN with 5 neurons per layer (input/output apart) for XXX epochs and 64 batch size.
 # - Save the model.
 
 # ## DL model
 
 # + id="a6HRX3PPd69L"
-import seaborn as sns
+import mlflow
 import numpy as np
+import os
 import pandas as pd
+import seaborn as sns
 import sklearn.model_selection as ms
 
 from keras import regularizers
@@ -119,8 +120,19 @@ hist.history.keys()
 
 probabilities = model.predict(X_ts_dum)
 fpr, tpr, _ = roc_curve(y_ts, probabilities)
+auc = auc(fpr, tpr)
 print("Max ROC:")
-print(auc(fpr, tpr))
+print(auc)
+
+# +
+# register the classifier
+os.environ['MLFLOW_TRACKING_URI'] = 'http://localhost:8000/'
+mlflow.set_experiment('NeuralNetwork')
+
+with mlflow.start_run(run_name='forest_gump'):
+    mlflow.log_metric("auc", auc)
+    mlflow.keras.log_model(keras_model=model, artifact_path='', registered_model_name='neural_network')
+# -
 
 predictions = np.where(probabilities > .5, 1, 0)
 cm = confusion_matrix(y_true=y_ts, y_pred=predictions)
@@ -150,7 +162,7 @@ plot_curves(hist.history)
 # -
 
 plt.figure()
-plt.plot(fpr, tpr, label='ROC curve (area = %0.2f)' % auc(fpr, tpr))
+plt.plot(fpr, tpr, label='ROC curve (area = %0.2f)' % auc)
 plt.plot([0, 1], [0, 1], linestyle='--')
 plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.05])
