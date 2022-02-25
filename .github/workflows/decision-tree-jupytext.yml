@@ -8,13 +8,12 @@ on:
     types:
       - opened
       - reopened
-        # We will comment 'syncronize' option, since we prefer to start GA manualy by creating/reopening PRs.
+        # We will disable 'syncronize' option, since we prefer to start GA ONLY manually by opening PRs.
         # - synchronize
     branches:
       - main
     paths:
       - 'model-tree-classifier/decision-tree-classifier.ipynb'
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -29,6 +28,8 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout repo
       uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
 
     # Checks if notebook output has been cleaned
     - uses: ResearchSoftwareActions/EnsureCleanNotebooksAction@1.1
@@ -39,28 +40,25 @@ jobs:
         pip install jupytext pipreqs
 
     # It would not be necessary to specify $GITHUB_WORKSPACE since it is the current folder
-    - name: Convert notebook to py script
+    - name: Convert notebook to py script amd generate requirements
       run: |
-        jupytext --to py $GITHUB_WORKSPACE/model-tree-classifier/decision-tree-classifier.ipynb -o $GITHUB_WORKSPACE/model-tree-classifier/decision-tree-classifier.py 
-
-    - name: Generate requirements.txt 
-      run: pipreqs --force $GITHUB_WORKSPACE/model-tree-classifier/
+        jupytext --to py $GITHUB_WORKSPACE/model-tree-classifier/decision-tree-classifier.ipynb -o $GITHUB_WORKSPACE/model-tree-classifier/decision-tree-classifier.py
+        pipreqs --force $GITHUB_WORKSPACE/model-tree-classifier/
 
     # WARNING: It will probably fail if decision-tree-classifier.ipynb is renamed without further changes
     # WARNING: At this time, .py and reqs are commited to Merge commit, but it can be modified under actions/checkout@v2
     # so the commit goes to release/xxx branch
     - name: Commit new py executable if necessary
       run:  |
-        # This "if" was set to launch the job manually from github and no changes were done to ipynb.
-        # if ! git diff --exit-code model-tree-classifier/decision-tree-classifier.py; then
-        git config --global user.name 'roldanx'
-        git config --global user.email 'roldanx@github.com'
-        git fetch
-        git checkout ${{ github.head_ref }}
+        # This "if" is set in order there is a new PR with changes on IPYNB but not on PY.
+        # We need to add our files of interest so git diff can work on them both if they have been modified or newly created.
         git add $GITHUB_WORKSPACE/model-tree-classifier/decision-tree-classifier.py $GITHUB_WORKSPACE/model-tree-classifier/requirements.txt
-        git commit -m "Update executable and generate requirements"
-        git fetch origin ${{ github.head_ref }}
-        git push origin ${{ github.head_ref }}
-        # else
-        #   echo "NO changes to be commited in decision-tree-classifier.py"
-        # fi
+        if ! git diff --exit-code model-tree-classifier/decision-tree-classifier.py; then
+          git config --global user.name 'roldanx'
+          git config --global user.email 'roldanx@github.com'
+          git commit -m "Update executable and generate requirements"
+          git fetch origin ${{ github.head_ref }}
+          git push origin ${{ github.head_ref }}
+        else
+          echo "NO changes to be commited in decision-tree-classifier.py"
+        fi
