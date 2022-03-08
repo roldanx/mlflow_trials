@@ -41,6 +41,7 @@ dataset = sns.load_dataset("titanic")
 dataframe, test_dataframe = ms.train_test_split(dataset, train_size=0.7, random_state=1)
 dataframe.head(5)
 
+# format data
 dataframe = dataframe.astype({"deck": str})
 test_dataframe = test_dataframe.astype({"deck": str})
 
