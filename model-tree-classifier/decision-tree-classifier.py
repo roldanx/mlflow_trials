@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.6
+#       jupytext_version: 1.13.7
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -38,13 +37,14 @@ warnings.filterwarnings('ignore')
 
 # ## Import dataset
 
+# load dataset
 data = 'car_evaluation.csv'
 df = pd.read_csv(data, header=None)
 
 # view dimensions of dataset
 df.shape
 
-# We can see that there are 1728 instances and 7 variables in the data set.
+# As we can see, there are 1728 instances and 7 variables in the data set.
 
 # preview the top of the dataset
 df.head()
