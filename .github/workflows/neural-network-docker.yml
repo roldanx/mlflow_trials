@@ -28,7 +28,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         registry: docker.io
-        image: roldanx/neural-nerwork-mlflow
+        image: roldanx/neural-network-mlflow
         directory: neural-nerwork-mlflow
         dockerfile: neural-nerwork-mlflow/Dockerfile
         tags: latest
