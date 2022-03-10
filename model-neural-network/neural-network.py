@@ -14,7 +14,7 @@
 
 # # Titanic survival classification problem
 # - Download titanic dataset.
-# - Train a 2-layer NN with 5 neurons per layer (input/output apart) for XX epochs and 64 batch size.
+# - Train a 2-layer NN with 5 neurons per layer (input/output apart) for XXX epochs and 64 batch size.
 # - Save the model.
 
 # ## DL model
