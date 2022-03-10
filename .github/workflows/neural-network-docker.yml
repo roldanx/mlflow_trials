@@ -29,8 +29,8 @@ jobs:
       with:
         registry: docker.io
         image: roldanx/neural-network-mlflow
-        directory: neural-nerwork-mlflow
-        dockerfile: neural-nerwork-mlflow/Dockerfile
+        directory: neural-network-mlflow
+        dockerfile: neural-network-mlflow/Dockerfile
         tags: latest
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
