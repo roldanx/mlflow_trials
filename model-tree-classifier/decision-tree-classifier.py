@@ -44,7 +44,7 @@ df = pd.read_csv(data, header=None)
 # view dimensions of dataset
 df.shape
 
-# There are 1728 instances and 7 variables in the data set.
+# As we can see, there are 1728 instances and 7 variables in the data set.
 
 # preview the top of the dataset
 df.head()
