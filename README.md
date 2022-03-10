@@ -1,7 +1,12 @@
-# Running, saving and accessing tree classifier model on MLFlow Registry
+# Running, saving and accessing tree classifier model on MLFlow Registry (LOCAL DEPLOYEMNT)
 > PREREQUISITES: 
 >* To have **docker** installed.
 >* To have **mlflow** and **psycopg2-binary** python packages installed.
+
+Define artifacts storage location:
+```
+$ export MLRUNS=<PATH_TO_MLRUNS>
+```
 
 Start up PostgreSQL:
 ```
@@ -9,11 +14,13 @@ $ docker run --name postgresql-mlflow -d --network host roldanx/postgresql-mlflo
 ```
 Start up Tracking server:
 ```
-$ mlflow server --backend-store-uri postgresql://mlflow:mlflow@localhost/mlflow_db --default-artifact-root mlruns -h 0.0.0.0 -p 8000
+$ mlflow server --backend-store-uri postgresql://mlflow:mlflow@localhost/mlflow_db --default-artifact-root $MLRUNS -h 0.0.0.0 -p 8000
 ```
 Train model:
 ```
-$ docker run --name <PROJECT> --network host roldanx/<PROJECT>
+$ docker run --name <PROJECT> --network host -v $MLRUNS:/home/mlruns:Z roldanx/<PROJECT>
+# EXAMPLE:
+# docker run --name decision-tree --network host -v $MLRUNS:/home/mlruns:Z roldanx/tree-classifier-mlflow
 ```
 Check logged tree classifier model (from `browser`):
 
