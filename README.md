@@ -18,10 +18,13 @@ $ mlflow server --backend-store-uri postgresql://mlflow:mlflow@localhost/mlflow_
 ```
 Train model:
 ```
-$ docker run --name <PROJECT> --network host -v $MLRUNS:/home/mlruns:Z roldanx/<PROJECT>
+$ docker run --name <PROJECT> --network host -v $MLRUNS:$MLRUNS roldanx/<PROJECT>
 # EXAMPLE:
-# docker run --name decision-tree --network host -v $MLRUNS:/home/mlruns:Z roldanx/tree-classifier-mlflow
+# podman run --name decision-tree --network host -v $MLRUNS:$MLRUNS:Z roldanx/tree-classifier-mlflow
 ```
+*info: volume hostpath and mountpoint must be the same, since the container will store the artifacts wherever the mlflow "artifact root" is set.
+<br>
+
 Check logged tree classifier model (from `browser`):
 
 ```
