@@ -8,4 +8,5 @@ RUN ["chmod", "+x", "load_env.sh"]
 COPY app/templates templates
 COPY app/app.py app.py
 RUN ["chmod", "+x", "app.py"]
+EXPOSE 5000
 ENTRYPOINT ["sh", "-c", "bash load_env.sh && python app.py"]
