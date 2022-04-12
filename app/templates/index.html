@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+roldanx
+{% endblock title %}
+
+{% block body %}
+<!-- nav bar -->
+<nav class="navbar navbar-expand-lg navbar-light shadow fixed-top" style="background-color: #f9fd16;">
+    <a class="navbar-brand" href="/">Index</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">[home]<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://github.com/roldanx/mlflow_trials">[source code]</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- nav bar ends -->
+
+<div class="container-fluid masthead">
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <!-- List models -->
+        <a href="tree">Decision Tree Classifier</a>
+        <br>
+        <br>
+        <a href="nn">Neural Network</a>
+</div>
+{% endblock body %}

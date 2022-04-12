@@ -29,7 +29,6 @@ jobs:
       with:
         registry: docker.io
         image: roldanx/tree-classifier-mlflow
-        directory: model-tree-classifier
         dockerfile: model-tree-classifier/Dockerfile
         tags: latest
         username: ${{ secrets.DOCKER_USERNAME }}
