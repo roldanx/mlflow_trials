@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.7
+#       jupytext_version: 1.13.8
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -35,6 +35,14 @@ from sklearn.metrics import roc_curve, roc_auc_score, precision_score, accuracy_
 from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.optimizers import Adam
 # -
+
+# ## Get MLFlow server URI
+
+registry_uri = os.getenv('REGISTRY_URI')
+if not registry_uri:
+    raise Exception('REGISTRY_URI env variable should be defined on the system in order to log the generated model')
+
+# ## Prepare dataset
 
 # data load
 dataset = sns.load_dataset("titanic")
@@ -89,6 +97,9 @@ integer_encoded = label_encoder.fit_transform(y.values.ravel())
 y = integer_encoded.reshape(len(integer_encoded), 1)
 integer_encoded_ts = label_encoder.fit_transform(y_ts.values.ravel())
 y_ts = integer_encoded_ts.reshape(len(integer_encoded_ts), 1)
+# -
+
+# ## Model implementation
 
 # + colab={"base_uri": "https://localhost:8080/"} id="6__EfUNR2S33" outputId="9ecbb7eb-29fc-4569-d8ae-c3c39819949e"
 opt = Adam(learning_rate=0.01)
@@ -127,7 +138,7 @@ print(auc)
 
 # +
 # register the classifier
-os.environ['MLFLOW_TRACKING_URI'] = 'http://localhost:8000/'
+mlflow.set_tracking_uri(registry_uri)
 mlflow.set_experiment('NeuralNetwork')
 
 with mlflow.start_run(run_name='forest_gump'):
