@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.7
+#       jupytext_version: 1.13.8
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -34,6 +34,12 @@ from sklearn.tree import DecisionTreeClassifier
 
 warnings.filterwarnings('ignore')
 # %matplotlib inline
+
+# ## Get MLFlow server URI
+
+registry_uri = os.getenv('REGISTRY_URI')
+if not registry_uri:
+    raise Exception('REGISTRY_URI env variable should be defined on the system in order to log the generated model')
 
 # ## Import dataset
 
@@ -150,7 +156,7 @@ plt.savefig("tree.jpg")
 
 # +
 # register the classifier
-os.environ['MLFLOW_TRACKING_URI'] = 'http://localhost:8000/'
+mlflow.set_tracking_uri(registry_uri)
 mlflow.set_experiment('TreeClassifier')
 
 with mlflow.start_run(run_name='blade_runner'):
