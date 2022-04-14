@@ -28,7 +28,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         registry: docker.io
-        image: roldanx/neural-network-mlflow
+        image: roldanx/mlflow-nn
         dockerfile: model-neural-network/Dockerfile
         tags: latest
         username: ${{ secrets.DOCKER_USERNAME }}

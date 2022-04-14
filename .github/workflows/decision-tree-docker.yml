@@ -28,7 +28,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         registry: docker.io
-        image: roldanx/tree-classifier-mlflow
+        image: roldanx/mlflow-tree
         dockerfile: model-tree-classifier/Dockerfile
         tags: latest
         username: ${{ secrets.DOCKER_USERNAME }}
