@@ -1,7 +1,8 @@
 FROM python:3.9
 WORKDIR /home
 RUN ["pip", "install", "--upgrade", "pip"]
-RUN ["pip", "install", "psycopg2-binary", "boto3", "mlflow==1.25.1"]
+# boto3 is required to access artifacts from s3 
+RUN ["pip", "install", "psycopg2-binary", "mlflow==1.25.1", "boto3"]
 COPY load_env.sh load_env.sh
 RUN ["chmod", "+x", "load_env.sh"]
 EXPOSE 8000

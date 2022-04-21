@@ -8,7 +8,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'mlflow-server'
+      - 'mlflow-server/*'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
