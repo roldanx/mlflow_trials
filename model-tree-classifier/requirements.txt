@@ -1,5 +1,6 @@
+boto3==1.21.44
 category_encoders==2.4.0
 matplotlib==3.5.1
-mlflow==1.25.0
+mlflow==1.25.1
 pandas==1.4.2
 scikit_learn==1.0.2

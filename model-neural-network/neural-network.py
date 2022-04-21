@@ -20,6 +20,7 @@
 # ## DL model
 
 # + id="a6HRX3PPd69L"
+import boto3 # required in case we store the artifacts on s3
 import mlflow
 import numpy as np
 import os
